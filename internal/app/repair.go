@@ -51,7 +51,7 @@ func (s *Service) AcceptWorkOrder(id, assignee string) (domain.WorkOrder, error)
 		if wo.AssignedTo == assignee {
 			return wo, nil // idempotent: same assignee re-sending
 		}
-		return domain.WorkOrder{}, fmt.Errorf("%v: work order %s already accepted by %s", domain.ErrAlreadyAccepted, id, wo.AssignedTo)
+		return domain.WorkOrder{}, fmt.Errorf("%w: work order %s already accepted by %s", domain.ErrAlreadyAccepted, id, wo.AssignedTo)
 	case domain.WorkOrderStatusDispatched, domain.WorkOrderStatusEscalated:
 		// allowed
 	default:
